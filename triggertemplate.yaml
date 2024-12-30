@@ -1,0 +1,21 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: echo-template
+  namespace: getting-started
+spec:
+  params:
+    - name: message
+      description: The message to echo
+      default: "Hello from Tekton Triggers!"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: echo-pipeline-run-
+      spec:
+        pipelineRef:
+          name: echo-pipeline
+        params:
+          - name: message
+            value: "$(tt.params.message)"

@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: echo-pipeline
+  namespace: getting-started
+spec:
+  params:
+    - name: message
+      type: string
+  tasks:
+    - name: echo-message
+      taskSpec:
+        steps:
+          - name: echo
+            image: alpine
+            script: |
+              #!/bin/sh
+              echo "Message: $(params.message)"
+      
